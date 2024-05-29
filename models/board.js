@@ -1,5 +1,6 @@
-import {DataTypes, Model} from 'sequelize';
+import {DataTypes} from 'sequelize';
 import sequelize from '../db.js';
+import {Task} from './task.js'
 
 export const Board = sequelize.define(
     'Board',
@@ -13,20 +14,6 @@ export const Board = sequelize.define(
     {
         sequelize,
         modelName: 'Board',
-        freezeTableName: true,
-    });
-
-export const Task = sequelize.define(
-    "Task",
-    {
-        content: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-    },
-    {
-        sequelize,
-        modelName: 'Task',
         freezeTableName: true,
     });
 

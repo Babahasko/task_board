@@ -1,7 +1,8 @@
 import express from 'express';
 import {logger} from './logger.js';
 import sequelize from './db.js'
-import {Board, Task} from './models/board.js';
+import {Board} from './models/board.js';
+import {Task} from './models/task.js';
 import router from './router.js';
 
 
@@ -22,8 +23,7 @@ try{
 }
 
 try{
-    await Board.sync();
-    await Task.sync();
+    await sequelize.sync({alter: true})
     logger.info('Tables sync successfully')
 } catch (e) {
     logger.error('Unable to sync databases', e)
