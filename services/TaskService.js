@@ -3,13 +3,17 @@ import {Board} from '../models/board.js'
 import {logger} from '../logger.js';
 
 class TaskService {
-    async getAllTasksByBoardId(board_id) {
+    async getAllTasksByBoardId(board_id, column='createdAt', direction='DESC') {
         logger.info('TaskService.getAllTasksByBoardId: '+ board_id);
         try {
             const board = await Board.findOne(
                 { where: {id: board_id}}
             )
-            const result = await board.getTasks()
+            const result = await board.getTasks({
+                order: [
+                    [column, direction],
+                ]
+            })
             return result
         } catch (e) {
             logger.error('TaskService.getAllTasksByBoardId', e)
@@ -28,11 +32,11 @@ class TaskService {
         }
 
     }
-    async updateTaskById(task_id, done, content) {
+    async updateTaskById(task_id, done, content, board_id) {
         logger.info('TaskService.updateTaskById: '+ task_id);
         try {
             await Task.update(
-                {done: done, content: content},
+                {done: done, content: content, BoardId: board_id},
                 { where: {id: task_id},}
             );
             const task = await Task.findOne(

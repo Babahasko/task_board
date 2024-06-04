@@ -5,9 +5,9 @@ class TaskController {
     async getAllTasksByBoardId(req, res) {
         logger.info('TaskController.getAllTasksByBoardId');
         try {
-            const {board_id} = req.body;
-            const result = await TaskService.getAllTasksByBoardId(board_id);
-            res.status(200).json('' + JSON.stringify(result));
+            const {board_id, column, direction} = req.body;
+            const result = await TaskService.getAllTasksByBoardId(board_id, column, direction);
+            res.status(200).json(result);
         } catch (e) {
             logger.error('TaskController.getAllTasksByBoardId', e);
             res.status(500).json({error: e.message});
@@ -34,9 +34,8 @@ class TaskController {
                 res.status(500).json({error: 'Params id must be provided'})
             }
             const task_id = req.params.id;
-            const {done, content} = req.body;
-            logger.info("req.body {done}: "+ done)
-            const task = await TaskService.updateTaskById(task_id, done, content)
+            const {done, content, board_id} = req.body;
+            const task = await TaskService.updateTaskById(task_id, done, content, board_id)
             res.status(200).json('Success' + JSON.stringify(task));
         } catch (e) {
             logger.error('TaskController.updateTaskById', e);
