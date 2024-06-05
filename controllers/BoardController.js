@@ -42,7 +42,7 @@ class BoardController {
 
             await BoardService.updateBoardById(id, name);
             logger.info('BoardController.updateBoardById')
-            return res.status(200).json('Success')
+            return res.status(200).json('The board was updated with id: '+ id)
         } catch (e) {
             logger.error('BoardController.updateBoardById', e);
         }
@@ -57,7 +57,7 @@ class BoardController {
             const id = req.params.id;
             await BoardService.deleteBoard(id)
             logger.info('BoardService.deleteBoardById with id: ', id);
-            res.status(200).json('Success')
+            res.status(200).json('The board was deleted with id: '+ id)
         } catch (e) {
             logger.error('BoardService.deleteBoardById', e);
             res.status(500).json({error: e.message})

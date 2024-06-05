@@ -4,20 +4,21 @@ import sequelize from './db.js'
 import {Board} from './models/board.js';
 import {Task} from './models/task.js';
 import router from './router.js';
-
+import {swaggerUi, spec} from './utils/swagger.js';
 
 const PORT = 5000;
 
 const app = express();
 
 // Middleware
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec, {explorer: true}));
 app.use(express.json());
 app.use('/api', router)
 //
 
 try{
     await sequelize.authenticate();
-    logger.info('Connection to the database Sucessfull')
+    logger.info('Connection to the database Successful')
 } catch (e) {
     logger.error('Unable to connect to the database', e)
 }
