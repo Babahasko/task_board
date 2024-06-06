@@ -36,9 +36,6 @@ const router = express();
 router.post('/board', BoardController.createBoard)
 /**
  * @swagger
- * tags:
- *   name: Board
- *   description: The board managing API
  * /api/board/{id}:
  *   get:
  *     summary: Get the board by id
@@ -64,9 +61,6 @@ router.post('/board', BoardController.createBoard)
 router.get('/board/:id', BoardController.getBoardById)
 /**
  * @swagger
- * tags:
- *   name: Board
- *   description: The board managing API
  * /api/board:
  *   get:
  *     summary: Lists all the board`s
@@ -86,9 +80,6 @@ router.get('/board/:id', BoardController.getBoardById)
 router.get('/board', BoardController.getAllBoards)
 /**
  * @swagger
- * tags:
- *   name: Board
- *   description: The board managing API
  * /api/board/{id}:
  *   put:
  *     summary: Update the board by id
@@ -119,9 +110,6 @@ router.get('/board', BoardController.getAllBoards)
 router.put('/board/:id', BoardController.updateBoardById)
 /**
  * @swagger
- * tags:
- *   name: Board
- *   description: The board managing API
  * /api/board/{id}:
  *   delete:
  *     summary: Delete the board by id
@@ -144,11 +132,157 @@ router.delete('/board/:id', BoardController.deleteBoardById)
 //
 
 //TaskRouter
-
+/**
+ * @swagger
+ * tags:
+ *   name: Task
+ *   description: The task managing API
+ * /api/task:
+ *   post:
+ *     summary: Create a new task
+ *     tags: [Task]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *              content:
+ *               type: string
+ *              board_id:
+ *               type: integer
+ *               description: Foreign key to bard id
+ *     responses:
+ *       200:
+ *         description: The created task.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Task'
+ *       500:
+ *         description: Some server error
+ *
+ */
 router.post('/task', TaskController.createTaskByBoardId)
+/**
+ * @swagger
+ * /api/task:
+ *   get:
+ *     summary: Lists all the task`s
+ *     tags: [Task]
+ *     parameters:
+ *       - in: query
+ *         name: board_id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID of the board to get
+ *       - in: query
+ *         name: column
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Column for filtering. Such as 'updatedAt'. Default = createdAt
+ *       - in: query
+ *         name: direction
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Direction of the filtering column. Default is DESC
+ *     responses:
+ *       200:
+ *         description: The list of all board tasks.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               $ref: '#/components/schemas/Task'
+ *       500:
+ *         description: Some server error
+ *
+ */
 router.get('/task', TaskController.getAllTasksByBoardId)
+/**
+ * @swagger
+ * /api/task/{id}:
+ *   get:
+ *     summary: Get the task by ID
+ *     tags: [Task]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: The task id
+ *     responses:
+ *       200:
+ *         description: Get the task by ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               $ref: '#/components/schemas/Task'
+ *       500:
+ *         description: Some server error
+ *
+ */
 router.get('/task/:id', TaskController.getOneTaskById)
+/**
+ * @swagger
+ * /api/task/{id}:
+ *   put:
+ *     summary: Update the task by ID
+ *     tags: [Task]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: The task id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               done:
+ *                 type: boolean
+ *               content:
+ *                 type: string
+ *               board_id:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: The task was updated
+ *       500:
+ *         description: Some server error
+ *
+ */
 router.put('/task/:id', TaskController.updateTaskById)
+/**
+ * @swagger
+ * /api/task/{id}:
+ *   delete:
+ *     summary: Delete the task by id
+ *     tags: [Task]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The task id
+ *     responses:
+ *       200:
+ *         description: The task was deleted
+ *       500:
+ *         description: Some server error
+ *
+ */
 router.delete('/task/:id', TaskController.deleteTaskById)
 //
 

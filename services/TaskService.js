@@ -59,8 +59,12 @@ class TaskService {
                 content: content
             })
             await board.addTasks(task)
-            const result = await board.getTasks()
-            return result
+            const result = await board.getTasks({
+                where: {BoardId: board_id},
+                order: [['createdAt', 'DESC']],
+                }
+            )
+            return result[0]
 
         } catch (e) {
             logger.error('TasKService.createTaskByBoardId: ', e)
