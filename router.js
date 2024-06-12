@@ -38,7 +38,7 @@ router.post('/board', BoardController.createBoard)
  * @swagger
  * /api/board/{id}:
  *   get:
- *     summary: Get the board by id
+ *     summary: Get the board by ID
  *     tags: [Board]
  *     parameters:
  *       - in: path
@@ -46,16 +46,18 @@ router.post('/board', BoardController.createBoard)
  *         schema:
  *           type: string
  *         required: true
- *         description: The board id
+ *         description: The board ID
  *     responses:
  *       200:
- *         description: The board response by id.
+ *         description: The board response by ID.
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Board'
  *       500:
  *         description: Some server error
+ *       404:
+ *         description: The board not found by ID.
  *
  */
 router.get('/board/:id', BoardController.getBoardById)
@@ -82,7 +84,7 @@ router.get('/board', BoardController.getAllBoards)
  * @swagger
  * /api/board/{id}:
  *   put:
- *     summary: Update the board by id
+ *     summary: Update the board by ID
  *     tags: [Board]
  *     parameters:
  *       - in: path
@@ -90,7 +92,7 @@ router.get('/board', BoardController.getAllBoards)
  *         schema:
  *           type: string
  *         required: true
- *         description: The board id
+ *         description: The board ID
  *     requestBody:
  *       required: true
  *       content:
@@ -103,6 +105,8 @@ router.get('/board', BoardController.getAllBoards)
  *     responses:
  *       200:
  *         description: The board was updated
+ *       400:
+ *         description: The board not found by ID
  *       500:
  *         description: Some server error
  *
@@ -112,7 +116,7 @@ router.put('/board/:id', BoardController.updateBoardById)
  * @swagger
  * /api/board/{id}:
  *   delete:
- *     summary: Delete the board by id
+ *     summary: Delete the board by ID
  *     tags: [Board]
  *     parameters:
  *       - in: path
@@ -120,12 +124,14 @@ router.put('/board/:id', BoardController.updateBoardById)
  *         schema:
  *           type: string
  *         required: true
- *         description: The board id
+ *         description: The board ID
  *     responses:
  *       200:
  *         description: The board was deleted
  *       500:
  *         description: Some server error
+ *       404:
+ *         description: The board not found by ID.
  *
  */
 router.delete('/board/:id', BoardController.deleteBoardById)
@@ -152,7 +158,7 @@ router.delete('/board/:id', BoardController.deleteBoardById)
  *               type: string
  *              board_id:
  *               type: integer
- *               description: Foreign key to bard id
+ *               description: Foreign key to bard ID
  *     responses:
  *       200:
  *         description: The created task.
@@ -160,6 +166,8 @@ router.delete('/board/:id', BoardController.deleteBoardById)
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Task'
+ *       404:
+ *         description: The board not found by ID
  *       500:
  *         description: Some server error
  *
@@ -176,7 +184,7 @@ router.post('/task', TaskController.createTaskByBoardId)
  *         name: board_id
  *         schema:
  *           type: integer
- *         required: true
+ *         required: false
  *         description: ID of the board to get
  *       - in: query
  *         name: column
@@ -202,7 +210,7 @@ router.post('/task', TaskController.createTaskByBoardId)
  *         description: Some server error
  *
  */
-router.get('/task', TaskController.getAllTasksByBoardId)
+router.get('/task', TaskController.getAllTasks)
 /**
  * @swagger
  * /api/task/{id}:
@@ -226,6 +234,8 @@ router.get('/task', TaskController.getAllTasksByBoardId)
  *               $ref: '#/components/schemas/Task'
  *       500:
  *         description: Some server error
+ *       404:
+ *         description: The task not found by ID
  *
  */
 router.get('/task/:id', TaskController.getOneTaskById)
@@ -241,7 +251,7 @@ router.get('/task/:id', TaskController.getOneTaskById)
  *         schema:
  *           type: integer
  *         required: true
- *         description: The task id
+ *         description: The task by ID
  *     requestBody:
  *       required: true
  *       content:
@@ -260,6 +270,8 @@ router.get('/task/:id', TaskController.getOneTaskById)
  *         description: The task was updated
  *       500:
  *         description: Some server error
+ *       404:
+ *         description: The task not found by ID
  *
  */
 router.put('/task/:id', TaskController.updateTaskById)
@@ -267,7 +279,7 @@ router.put('/task/:id', TaskController.updateTaskById)
  * @swagger
  * /api/task/{id}:
  *   delete:
- *     summary: Delete the task by id
+ *     summary: Delete the task by ID
  *     tags: [Task]
  *     parameters:
  *       - in: path
@@ -275,12 +287,14 @@ router.put('/task/:id', TaskController.updateTaskById)
  *         schema:
  *           type: string
  *         required: true
- *         description: The task id
+ *         description: The task ID
  *     responses:
  *       200:
  *         description: The task was deleted
  *       500:
  *         description: Some server error
+ *       404:
+ *         description: The task not found by ID
  *
  */
 router.delete('/task/:id', TaskController.deleteTaskById)

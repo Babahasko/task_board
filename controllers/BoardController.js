@@ -21,15 +21,15 @@ class BoardController {
 
             const id = req.params.id;
             const board = await BoardService.getBoardById(id)
-
+            if (board === null) {
+                return res.status(404).json('Board not found with id: '+ id);
+            }
             return res.status(200).json(board)
         } catch (e) {
-            logger.error('BoardController' + e)
-
+            logger.error('BoardController: ' + e.message)
             return res.status(500).json({error: e.message});
         }
     }
-
     async updateBoardById(req, res) {
         logger.info('BoardController.updateBoardById')
         try {
@@ -40,24 +40,31 @@ class BoardController {
             const id =req.params.id;
             const {name} = req.body;
 
-            await BoardService.updateBoardById(id, name);
-            logger.info('BoardController.updateBoardById')
-            return res.status(200).json('The board was updated with id: '+ id)
+            const result = await BoardService.updateBoardById(id, name);
+            logger.info('BoardController.updateBoardById.result= '+ result)
+            if (result == 0) {
+                return res.status(404).json('Board with id: '+ id + ' not found')
+            } else if (result == 1) {
+                return res.status(200).json('The board was updated with id: '+ id)
+            }
         } catch (e) {
-            logger.error('BoardController.updateBoardById', e);
+            logger.error('BoardController.updateBoardById: ', e);
         }
     }
     async deleteBoardById(req, res) {
         logger.info('BoardController.deleteBoardById');
         try {
             if (!req.params.id) {
-                res.status(500).json({error: 'Params id must be provided'})
+                return res.status(500).json({error: 'Params id must be provided'})
             }
 
             const id = req.params.id;
-            await BoardService.deleteBoard(id)
-            logger.info('BoardService.deleteBoardById with id: ', id);
-            res.status(200).json('The board was deleted with id: '+ id)
+            const result = await BoardService.deleteBoard(id)
+            if (result == 0) {
+                return res.status(404).json('Board with id: '+ id + ' not found')
+            } else if (result == 1) {
+                return res.status(200).json('The board was deleted with id: '+ id)
+            }
         } catch (e) {
             logger.error('BoardService.deleteBoardById', e);
             res.status(500).json({error: e.message})
