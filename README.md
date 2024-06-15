@@ -22,3 +22,10 @@ npm install -g nodemon
 ```cmd
 docker-compose up -d --build
 ```
+
+### Запуск проекта
+1. Запускаем контейнер с базой данных
+2. Запускаем приложение из папки "backend"
+```cmd
+nodemon index.js
+```
