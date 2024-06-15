@@ -21,5 +21,5 @@ npm install -g nodemon
 ### Инициализация базы данных
 Переходим в папку "backend" и создаём контейнер с базой данных
 ```cmd
-docker compose up -d --build
+docker-compose up -d --build
 ```
