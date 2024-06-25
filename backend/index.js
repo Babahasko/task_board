@@ -5,15 +5,17 @@ import {Board} from './models/board.js';
 import {Task} from './models/task.js';
 import router from './router.js';
 import {swaggerUi, spec} from './utils/swagger.js';
+import cors from 'cors';
 
 const PORT = 5000;
 
 const app = express();
 
 // Middleware
+app.use(cors());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec, {explorer: true}));
 app.use(express.json());
-app.use('/api', router)
+app.use('/api', router);
 //
 
 try{
