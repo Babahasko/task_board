@@ -6,6 +6,8 @@ import {Task} from './models/task.js';
 import router from './router.js';
 import {swaggerUi, spec} from './utils/swagger.js';
 import cors from 'cors';
+import 'dotenv/config';
+import authMiddleware from "../authBackend/middlewares/authMiddleware.js"
 
 const PORT = 5000;
 
@@ -15,6 +17,7 @@ const app = express();
 app.use(cors());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec, {explorer: true}));
 app.use(express.json());
+app.use(authMiddleware);
 app.use('/api', router);
 //
 
