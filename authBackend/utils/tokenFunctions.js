@@ -6,7 +6,7 @@ function generateAccessToken(id, roles) {
         id,
         roles
     }
-    return jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN, {expiresIn: '15s'});
+    return jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN, {expiresIn: '5m'});
 }
 
 function checkAccessToken(token) {

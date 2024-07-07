@@ -1,7 +1,6 @@
 import express from "express";
 import BoardController from "./controllers/BoardController.js";
 import TaskController from "./controllers/TaskController.js";
-import authMiddleware from "../authBackend/middlewares/authMiddleware.js"
 const router = express();
 
 //BoardRouter
@@ -23,6 +22,8 @@ const router = express();
  *             properties:
  *              name:
  *               type: string
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       201:
  *         description: The created board.
@@ -48,6 +49,8 @@ router.post('/board', BoardController.createBoard)
  *           type: string
  *         required: true
  *         description: The board ID
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: The board response by ID.
@@ -68,6 +71,8 @@ router.get('/board/:id', BoardController.getBoardById)
  *   get:
  *     summary: Lists all the board`s
  *     tags: [Board]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: The list of all boards.
@@ -103,6 +108,8 @@ router.get('/board', BoardController.getAllBoards)
  *             properties:
  *               name:
  *                 type: string
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: The board was updated
@@ -126,6 +133,8 @@ router.put('/board/:id', BoardController.updateBoardById)
  *           type: string
  *         required: true
  *         description: The board ID
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: The board was deleted
@@ -160,6 +169,8 @@ router.delete('/board/:id', BoardController.deleteBoardById)
  *              board_id:
  *               type: integer
  *               description: Foreign key to bard ID
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: The created task.
@@ -199,6 +210,8 @@ router.post('/task', TaskController.createTaskByBoardId)
  *           type: string
  *         required: false
  *         description: Direction of the filtering column. Default is DESC
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: The list of all board tasks.
@@ -209,9 +222,8 @@ router.post('/task', TaskController.createTaskByBoardId)
  *               $ref: '#/components/schemas/Task'
  *       500:
  *         description: Some server error
- *
  */
-router.get('/task',authMiddleware, TaskController.getAllTasks)
+router.get('/task', TaskController.getAllTasks)
 /**
  * @swagger
  * /api/task/{id}:
@@ -225,6 +237,8 @@ router.get('/task',authMiddleware, TaskController.getAllTasks)
  *           type: integer
  *         required: true
  *         description: The task id
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Get the task by ID
@@ -266,6 +280,8 @@ router.get('/task/:id', TaskController.getOneTaskById)
  *                 type: string
  *               board_id:
  *                 type: integer
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: The task was updated
@@ -289,6 +305,8 @@ router.put('/task/:id', TaskController.updateTaskById)
  *           type: string
  *         required: true
  *         description: The task ID
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: The task was deleted
