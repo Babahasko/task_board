@@ -4,8 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "start:dev": "nodemon index.js"
+    "devStart": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",

@@ -1,6 +1,7 @@
 import express from "express";
 import BoardController from "./controllers/BoardController.js";
 import TaskController from "./controllers/TaskController.js";
+import authMiddleware from "../authBackend/middlewares/authMiddleware.js"
 const router = express();
 
 //BoardRouter
@@ -210,7 +211,7 @@ router.post('/task', TaskController.createTaskByBoardId)
  *         description: Some server error
  *
  */
-router.get('/task', TaskController.getAllTasks)
+router.get('/task',authMiddleware, TaskController.getAllTasks)
 /**
  * @swagger
  * /api/task/{id}:
